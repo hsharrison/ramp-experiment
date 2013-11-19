@@ -26,8 +26,9 @@ import experimentator as exp
 
 class RampExperiment(exp.Experiment):
     def __init__(self, settings_by_level, **kwargs):
-        output_names = ('choice', 'reaction time')
+        output_names = ('can step', 'reaction time')
 
+        self.response = {pyglet.window.key.PAGEDOWN: True, pyglet.window.key.PAGEUP: False}
         self.font_size = 50
         self.text_x = 50
         self.text_y = 50
@@ -123,7 +124,7 @@ class RampExperiment(exp.Experiment):
         pyglet.app.run()
         self.window.clear()
 
-        return self.press, self.press_time - start_time
+        return self.response.get(self.press), self.press_time - start_time
 
 
 if __name__ == '__main__':
