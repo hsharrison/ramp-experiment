@@ -3,9 +3,9 @@
 Slope perception experiment.
 
 Usage:
-  ramp.py new <experiment_file> [--participants=<p>] [--trials=<t>]
+  ramp.py new <experiment_file> [--participants=<p>] [--trials=<t>] [--debug]
   ramp.py run <experiment_file> [--demo] [--finished] [--debug] [(<level> <n>)]...
-  ramp.py export <experiment_file> <data_file>
+  ramp.py export <experiment_file> <data_file> [--debug]
   ramp.py -h | --help
 
 Options:
@@ -131,6 +131,10 @@ if __name__ == '__main__':
     from docopt import docopt
     opts = docopt(__doc__)
 
+    if opts['--debug']:
+        import logging
+        logging.basicConfig(level=logging.DEBUG)
+
     if opts['new']:
         settings = {'participant': dict(n=int(opts['--participants'])),
                     'block': dict(n=2, sort='random', ivs={'perception': ['haptic', 'visual']}),
@@ -139,10 +143,6 @@ if __name__ == '__main__':
         RampExperiment(settings, levels=levels, experiment_file=opts['<experiment_file>'])
 
     elif opts['run']:
-        if opts['--debug']:
-            import logging
-            logging.basicConfig(level=logging.DEBUG)
-
         experiment_file = opts['<experiment_file>']
         by_started = not opts['--finished']
 
