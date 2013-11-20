@@ -124,7 +124,7 @@ class RampExperiment(exp.Experiment):
         pyglet.app.run()
         self.window.clear()
 
-        return self.response.get(self.press), self.press_time - start_time
+        return self.response.get(self.press, self.press), self.press_time - start_time
 
 
 if __name__ == '__main__':
