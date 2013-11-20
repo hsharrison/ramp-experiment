@@ -73,7 +73,7 @@ class RampExperiment(exp.Experiment):
             self.wait = None
             pyglet.app.exit()
 
-        elif self.wait == 'participant':
+        elif self.wait == 'participant' and symbol in self.response:
             self.press = symbol
             self.press_time = datetime.datetime.now()
             self.wait = None
