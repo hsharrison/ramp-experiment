@@ -100,7 +100,7 @@ class RampExperiment(exp.Experiment):
             pyglet.app.run()
             self.window.clear()
 
-    def stop(self, level, **_):
+    def end(self, level, **_):
         if level == 'block':
             self.window.close()
 
