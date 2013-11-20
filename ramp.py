@@ -150,11 +150,12 @@ if __name__ == '__main__':
         experiment = exp.load_experiment(experiment_file)
 
         if section:
+            # If section not specified, could be overwriting data
             experiment.save(experiment_file + datetime.datetime.now().strftime('.%m-%d-%H-%M-backup'))
         else:
             section = experiment.find_first_not_run('participant', by_started=by_started)
 
-        exp.run_experiment_section(experiment_file, demo=opts['--demo'], **section)
+        exp.run_experiment_section(experiment_file, demo=opts['--demo'], section=section)
 
     elif opts['export']:
         exp.export_experiment_data(opts['<experiment_file>'], opts['<data_file>'])
