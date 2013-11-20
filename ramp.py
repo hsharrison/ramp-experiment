@@ -101,9 +101,20 @@ class RampExperiment(exp.Experiment):
             pyglet.app.run()
             self.window.clear()
 
-    def end(self, level, **_):
+    def end(self, level, **kwargs):
         if level == 'block':
             self.window.close()
+
+        elif level == 'participant':
+            # Add participant information
+            max_angle = input("Enter participant's max angle:  ")
+            gender = input("Enter participant's gender:  ")
+            age = input("Enter participant's age:  ")
+
+            new_data = {'max angle': max_angle, 'gender': gender, 'age': age}
+            which_participant = kwargs['participant']
+
+            self.find_section(participant=which_participant).add_data(new_data)
 
     def run_trial(self, **kwargs):
         self.press = None
