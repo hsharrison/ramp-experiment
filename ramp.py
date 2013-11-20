@@ -17,9 +17,10 @@ Options:
   --debug             Print debug messages to console.
 
 """
-import time
-import datetime
-import random
+from time import sleep
+from datetime import datetime
+from random import random
+
 import pyglet
 import experimentator as exp
 
@@ -76,7 +77,7 @@ class RampExperiment(exp.Experiment):
 
         elif self.wait == 'participant' and symbol in responses:
             self.press = symbol
-            self.press_time = datetime.datetime.now()
+            self.press_time = datetime.now()
             self.wait = None
             pyglet.app.exit()
 
@@ -86,7 +87,7 @@ class RampExperiment(exp.Experiment):
 
     def play_beep(self, duration=0.5):
         self.beep.play()
-        time.sleep(duration)
+        sleep(duration)
         self.beep.pause()
 
     def start(self, level, **kwargs):
@@ -129,9 +130,9 @@ class RampExperiment(exp.Experiment):
         pyglet.app.run()
         self.noise.pause()
 
-        time.sleep(0.5 + 2.5*random.random())
+        sleep(0.5 + 2.5* random())
         self.play_beep()
-        start_time = datetime.datetime.now()
+        start_time = datetime.now()
         self.wait = 'participant'
         pyglet.app.run()
         self.window.clear()
@@ -163,7 +164,7 @@ if __name__ == '__main__':
 
         if section:
             # If section not specified, could be overwriting data
-            experiment.save(experiment_file + datetime.datetime.now().strftime('.%m-%d-%H-%M-backup'))
+            experiment.save(experiment_file + datetime.now().strftime('.%m-%d-%H-%M-backup'))
         else:
             section = experiment.find_first_not_run('participant', by_started=by_started)
 
