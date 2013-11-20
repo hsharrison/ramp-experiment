@@ -23,12 +23,13 @@ import random
 import pyglet
 import experimentator as exp
 
+responses = {pyglet.window.key.PAGEDOWN: True, pyglet.window.key.PAGEUP: False}
+
 
 class RampExperiment(exp.Experiment):
     def __init__(self, settings_by_level, **kwargs):
         output_names = ('can step', 'reaction time')
 
-        self.response = {pyglet.window.key.PAGEDOWN: True, pyglet.window.key.PAGEUP: False}
         self.font_size = 50
         self.text_x = 50
         self.text_y = 50
@@ -73,7 +74,7 @@ class RampExperiment(exp.Experiment):
             self.wait = None
             pyglet.app.exit()
 
-        elif self.wait == 'participant' and symbol in self.response:
+        elif self.wait == 'participant' and symbol in responses:
             self.press = symbol
             self.press_time = datetime.datetime.now()
             self.wait = None
@@ -124,7 +125,7 @@ class RampExperiment(exp.Experiment):
         pyglet.app.run()
         self.window.clear()
 
-        return self.response.get(self.press, self.press), self.press_time - start_time
+        return responses.get(self.press, self.press), self.press_time - start_time
 
 
 if __name__ == '__main__':
