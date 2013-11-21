@@ -25,12 +25,19 @@ import logging
 import pyglet
 import experimentator as exp
 
-responses = {pyglet.window.key.PAGEDOWN: True, pyglet.window.key.PAGEUP: False}
+can_step_responses = {pyglet.window.key.PAGEDOWN: True, pyglet.window.key.PAGEUP: False}
+confidence_responses = {pyglet.window.key._1: 1,
+                        pyglet.window.key._2: 2,
+                        pyglet.window.key._3: 3,
+                        pyglet.window.key._4: 4,
+                        pyglet.window.key._5: 5,
+                        pyglet.window.key._6: 6,
+                        pyglet.window.key._7: 7}
 
 
 class RampExperiment(exp.Experiment):
     def __init__(self, settings_by_level, **kwargs):
-        output_names = ('can step', 'reaction time')
+        output_names = ('can step', 'confidence', 'reaction time')
 
         self.font_size = 50
         self.text_x = 50
@@ -74,13 +81,18 @@ class RampExperiment(exp.Experiment):
             pyglet.app.exit()
             raise exp.QuitSession('User quit')
 
-        if self.wait == 'experimenter' and symbol not in responses:
+        if self.wait == 'any' and symbol not in can_step_responses:
             self.wait = None
             pyglet.app.exit()
 
-        elif self.wait == 'participant' and symbol in responses:
+        elif self.wait == 'participant' and symbol in can_step_responses:
             self.press = symbol
             self.press_time = datetime.now()
+            self.wait = None
+            pyglet.app.exit()
+
+        elif self.wait == 'confidence' and symbol in confidence_responses:
+            self.press = symbol
             self.wait = None
             pyglet.app.exit()
 
@@ -101,7 +113,7 @@ class RampExperiment(exp.Experiment):
                                            font_size=self.font_size,
                                            x=self.text_x,
                                            y=self.text_y)
-            self.wait = 'experimenter'
+            self.wait = 'any'
             pyglet.app.run()
             self.window.clear()
 
@@ -124,15 +136,17 @@ class RampExperiment(exp.Experiment):
         self.press = None
         self.press_time = None
 
+        # Set ramp angle
         self.noise.play()
         self.label = pyglet.text.Label('Set ramp to angle {} and press any key.'.format(kwargs['angle']),
                                        font_size=self.font_size,
                                        x=self.text_x,
                                        y=self.text_y)
-        self.wait = 'experimenter'
+        self.wait = 'any'
         pyglet.app.run()
         self.noise.pause()
 
+        # Get participant response
         sleep(0.5 + 2.5*random())
         self.play_beep()
         start_time = datetime.now()
@@ -143,8 +157,19 @@ class RampExperiment(exp.Experiment):
                                        y=self.text_y)
         pyglet.app.run()
         self.window.clear()
+        can_step = can_step_responses.get(self.press, self.press)
 
-        return responses.get(self.press, self.press), self.press_time - start_time
+        # Get confidence
+        self.label = pyglet.text.Label('Enter confidence report.',
+                                       font_size=self.font_size,
+                                       x=self.text_x,
+                                       y=self.text_y)
+        self.wait = 'confidence'
+        pyglet.app.run()
+        self.window.clear()
+        confidence = confidence_responses.get(self.press, self.press)
+
+        return can_step, confidence, self.press_time - start_time
 
 
 if __name__ == '__main__':
