@@ -21,6 +21,7 @@ from time import sleep
 from datetime import datetime
 from random import random
 
+import logging
 import pyglet
 import experimentator as exp
 
@@ -151,7 +152,6 @@ if __name__ == '__main__':
     opts = docopt(__doc__)
 
     if opts['--debug']:
-        import logging
         logging.basicConfig(level=logging.DEBUG)
 
     if opts['new']:
