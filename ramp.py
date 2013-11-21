@@ -74,7 +74,7 @@ class RampExperiment(exp.Experiment):
             pyglet.app.exit()
             raise exp.QuitSession('User quit')
 
-        if self.wait == 'experimenter':
+        if self.wait == 'experimenter' and symbol not in responses:
             self.wait = None
             pyglet.app.exit()
 
