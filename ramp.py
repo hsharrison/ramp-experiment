@@ -178,6 +178,7 @@ if __name__ == '__main__':
 
     if opts['--debug']:
         logging.basicConfig(level=logging.DEBUG)
+        logging.debug('DEMO MODE = {}.'.format(opts['--demo']))
 
     if opts['new']:
         settings = {'participant': dict(n=int(opts['--participants'])),
