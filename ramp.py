@@ -67,6 +67,8 @@ class RampExperiment(exp.Experiment):
         self.__dict__.update(new_entries)
 
     def on_key_press(self, symbol, _):
+        logging.debug('Key press: {}, wait: {}.'.format(symbol, self.wait))
+
         if symbol == pyglet.window.key.ESCAPE:
             pyglet.app.exit()
             raise exp.QuitSession('User quit')
@@ -130,10 +132,14 @@ class RampExperiment(exp.Experiment):
         pyglet.app.run()
         self.noise.pause()
 
-        sleep(0.5 + 2.5* random())
+        sleep(0.5 + 2.5*random())
         self.play_beep()
         start_time = datetime.now()
         self.wait = 'participant'
+        self.label = pyglet.text.Label('Waiting for participant response...',
+                                       font_size=self.font_size,
+                                       x=self.text_x,
+                                       y=self.text_y)
         pyglet.app.run()
         self.window.clear()
 
