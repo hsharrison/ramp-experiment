@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
     if opts['new']:
         settings = {'participant': dict(n=int(opts['--participants'])),
-                    'block': dict(n=2, sort='random', ivs={'perception': ['haptic', 'visual']}),
+                    'block': dict(sort='random', ivs={'perception': ['haptic', 'visual']}),
                     'trial': dict(n=int(opts['--trials']), sort='random', ivs={'angle': list(range(1, 8))})}
         levels = ('participant', 'block', 'trial')
         RampExperiment(settings, levels=levels, experiment_file=opts['<experiment_file>'])
