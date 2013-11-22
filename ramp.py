@@ -37,7 +37,6 @@ confidence_responses = {pyglet.window.key._1: 1,
 
 class RampExperiment(exp.Experiment):
     def __init__(self, settings_by_level, **kwargs):
-        output_names = ('can step', 'confidence', 'reaction time')
 
         self.font_size = 50
         self.text_x = 50
@@ -52,7 +51,7 @@ class RampExperiment(exp.Experiment):
 
         self.init_sounds()
 
-        super().__init__(settings_by_level, output_names=output_names, **kwargs)
+        super().__init__(settings_by_level, **kwargs)
 
     def init_sounds(self):
         self.beep = pyglet.media.Player()
@@ -147,7 +146,7 @@ class RampExperiment(exp.Experiment):
         self.noise.pause()
 
         # Get participant response
-        sleep(0.5 + 2.5*random())
+        sleep(0.5 + 1.5*random())
         self.play_beep()
         start_time = datetime.now()
         self.wait = 'participant'
@@ -169,7 +168,9 @@ class RampExperiment(exp.Experiment):
         self.window.clear()
         confidence = confidence_responses.get(self.press, self.press)
 
-        return can_step, confidence, self.press_time - start_time
+        return {'can step': can_step,
+                'confidence': confidence,
+                'rt': self.press_time - start_time}
 
 
 if __name__ == '__main__':
@@ -191,16 +192,18 @@ if __name__ == '__main__':
         experiment_file = opts['<experiment_file>']
         by_started = not opts['--finished']
 
-        section = {level: int(n) for level, n in zip(opts['<level>'], opts['<n>'])}
-        experiment = exp.load_experiment(experiment_file)
+        section_dict = {level: int(n) for level, n in zip(opts['<level>'], opts['<n>'])}
+        experiment = RampExperiment.load_experiment(experiment_file)
 
-        if section:
+        if section_dict:
             # If section not specified, could be overwriting data
             experiment.save(experiment_file + datetime.now().strftime('.%m-%d-%H-%M-backup'))
+            section = experiment.find_section(**section_dict)
         else:
             section = experiment.find_first_not_run('participant', by_started=by_started)
 
-        exp.run_experiment_section(experiment_file, demo=opts['--demo'], section=section)
+        exp.run_experiment_section(experiment, demo=opts['--demo'], section=section)
+        experiment.save(experiment_file)
 
     elif opts['export']:
         exp.export_experiment_data(opts['<experiment_file>'], opts['<data_file>'])
