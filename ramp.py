@@ -126,10 +126,11 @@ class RampExperiment(exp.Experiment):
             gender = input("Enter participant's gender:  ")
             age = input("Enter participant's age:  ")
 
-            new_data = {'max angle': max_angle, 'gender': gender, 'age': age}
             which_participant = kwargs['participant']
 
-            self.find_section(participant=which_participant).add_data(new_data)
+            self.find_section(participant=which_participant).add_data(max_angle=max_angle,
+                                                                      gender=gender,
+                                                                      age=age)
 
     def run_trial(self, **kwargs):
         self.press = None
