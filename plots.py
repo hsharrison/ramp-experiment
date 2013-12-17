@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import pandas as pd
+import matplotlib.pyplot as plt
 from ramp import RampExperiment
-from ggplot import *
 
 data = RampExperiment.load_experiment('exp1.dat').data
 angle_map = {1: 12,
@@ -13,12 +12,19 @@ angle_map = {1: 12,
              7: 45}
 data['angle'] = [angle_map[angle] for angle in data['angle']]
 
-percents = pd.DataFrame(data.groupby(['angle', 'perception']).mean()*100)
+means = data.groupby(['angle', 'perception']).mean()
+means['can step'] *= 100
+means = means.reset_index()
 
-p = ggplot(aes(x='angle', y='can step', shape='perception'), data=percents.reset_index()) + \
-    geom_point() + \
-    stat_smooth() + \
-    xlab('Angle of inclination (deg)') + \
-    ylab('Percent "Yes"')
+can_step = means.pivot(index='angle', columns='perception', values='can step')
+confidence = means.pivot(index='angle', columns='perception', values='confidence')
 
-print(p)
+p = can_step.plot()
+plt.xlabel('Angle of inclination (deg)')
+plt.ylabel('Percent "Yes"')
+p.get_figure().savefig('can_step.png')
+
+p = confidence.plot()
+plt.xlabel('Angle of inclination (deg)')
+plt.ylabel('Percent "Yes"')
+p.get_figure().savefig('confidence.png')
