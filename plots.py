@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import matplotlib.pyplot as plt
+import numpy as np
 from ramp import RampExperiment
 
 data = RampExperiment.load_experiment('exp1.dat').data
@@ -16,36 +17,37 @@ data['angle'] = [angle_map[angle] for angle in data['angle']]
 # http://stackoverflow.com/questions/20625982/split-apply-combine-on-pandas-timedelta-column
 data['rt'] = [10**-9 * float(rt) for rt in data['rt']]
 
-means = data.groupby(['angle', 'perception']).mean()
-means['can step'] *= 100
-means = means.reset_index()
+# remove subject 4
+data = data.ix[1:3].append(data.ix[5:])
+
+# SEM function
+sem = lambda x: np.std(x, ddof=1) / np.sqrt(len(x))
+sem.__name__ = 'sem'
+
+# split-apply-combine
+summary = data.groupby(['angle', 'perception']).aggregate([np.mean, sem])
+summary['can step'] *= 100
 
 
-def make_plot(values, ylabel, filename):
-    p = means.pivot(index='angle', columns='perception', values=values).plot(style='-o')
-    plt.xlabel('Angle of inclination (deg)')
-    plt.ylabel(ylabel)
-    p.get_figure().savefig(filename)
+def make_plot(df):
+    haptic = df.xs('haptic', level='perception')
+    visual = df.xs('visual', level='perception')
+    plt.errorbar(visual.index, visual['mean'], yerr=visual['sem'], fmt='k-o', label='visual')
+    plt.hold(True)
+    plt.errorbar(haptic.index, haptic['mean'], yerr=haptic['sem'], fmt='k:o', label='haptic')
+    plt.xlabel('Angle (deg)')
+    plt.legend(title='Perception')
+    plt.hold(False)
 
 
-make_plot('can step', 'Percent "Yes"', 'can_step.png')
-make_plot('confidence', 'Confidence Judgment', 'confidence.png')
-make_plot('rt', 'Response Time (sec)', 'rt.png')
+make_plot(summary['can step'])
+plt.ylabel('Proportion "yes"')
+plt.savefig('can_step.png')
 
-# Remove outliers
-z = lambda x: (x - x.mean()) / x.std()
-data['rt_z'] = data.groupby(['angle', 'perception'])['rt'].transform(z)
-data['rt'][abs(data['rt_z']) > 3] = None
+make_plot(summary['confidence'])
+plt.ylabel('Confidence report')
+plt.savefig('confidence.png')
 
-means = data.groupby(['angle', 'perception']).mean().reset_index()
-
-make_plot('rt', 'Response Time (sec)', 'rt_rm_outliers.png')
-
-# Remove subject4
-means = data.ix[1:3].append(data.ix[5:10]).groupby(['angle', 'perception']).mean()
-means['can step'] *= 100
-means = means.reset_index()
-
-make_plot('can step', 'Percent "Yes"', 'can_step_rm4.png')
-make_plot('confidence', 'Confidence Judgment', 'confidence_rm4.png')
-make_plot('rt', 'Response Time (sec)', 'rt_rm4.png')
+make_plot(summary['rt'])
+plt.ylabel('Reaction time (sec)')
+plt.savefig('rt.png')
