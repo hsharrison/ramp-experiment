@@ -50,8 +50,8 @@ def make_plot(df):
 make_plot(summary['can step'])
 plt.ylabel('Percent "yes"')
 plt.hold(True)
-plt.plot([boundary['visual'], boundary['visual']], plt.ylim(), 'k-')
-plt.plot([boundary['haptic'], boundary['haptic']], plt.ylim(), 'k:')
+plt.plot([boundary['visual'], boundary['visual']], [plt.ylim()[0], 50], 'k-')
+plt.plot([boundary['haptic'], boundary['haptic']], [plt.ylim()[0], 50], 'k:')
 plt.hold(False)
 plt.savefig('can_step.png')
 
