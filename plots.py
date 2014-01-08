@@ -28,6 +28,13 @@ sem.__name__ = 'sem'
 summary = data.groupby(['angle', 'perception']).aggregate([np.mean, sem])
 summary['can step'] *= 100
 
+# determine 50% angles
+boundary = {}
+for perception in ('haptic', 'visual'):
+    percents = summary['can step', 'mean'].swaplevel('angle', 'perception').xs(perception)[:-1].copy()
+    percents.sort()
+    boundary[perception] = np.interp(50, percents, percents.index)
+
 
 def make_plot(df):
     haptic = df.xs('haptic', level='perception')
@@ -41,7 +48,11 @@ def make_plot(df):
 
 
 make_plot(summary['can step'])
-plt.ylabel('Proportion "yes"')
+plt.ylabel('Percent "yes"')
+plt.hold(True)
+plt.plot([boundary['visual'], boundary['visual']], plt.ylim(), 'k-')
+plt.plot([boundary['haptic'], boundary['haptic']], plt.ylim(), 'k:')
+plt.hold(False)
 plt.savefig('can_step.png')
 
 make_plot(summary['confidence'])
