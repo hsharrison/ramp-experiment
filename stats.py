@@ -31,6 +31,7 @@ means = data.reset_index().groupby(['participant', 'perception', 'angle']).mean(
 # arcsine transformation
 means['response'] = np.arcsin(np.sqrt(means['response']))
 
+# Mixed ANOVA must be done in R
 r.globalenv['means'] = com.convert_to_r_dataframe(means.reset_index(), strings_as_factors=True)
 r.r('''
 means$angle <- factor(means$angle)
@@ -40,3 +41,9 @@ means$participant <- factor(means$participant)
 for variable in ['response', 'rt', 'confidence']:
     print('\n\n{}\n-------'.format(variable))
     print(r.r('summary(aov({} ~ angle*perception + Error(participant), data=means))'.format(variable)))
+
+# Get the actual mean boundary
+data['max_angle'] = data['max_angle'].astype(int)
+data['max_angle'] = [angle_map[max_angle] for max_angle in data['max_angle']]
+mean_boundary = data.reset_index().groupby('participant').mean()['max_angle'].mean()
+print('\n\nMean boundary: {}'.format(mean_boundary))
