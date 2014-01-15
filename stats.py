@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-import statsmodels.api as sm
+import numpy as np
+import rpy2.robjects as r
+import pandas.rpy.common as com
+
 from ramp import RampExperiment
 
 data = RampExperiment.load_experiment('exp1.dat').data
@@ -22,19 +25,18 @@ data = data.ix[1:3].append(data.ix[5:])
 # use int for response
 data['response'] = data['can step'].astype(int)
 
-# anovas
-lm = sm.formula.ols('response ~ perception * C(angle)', data).fit()
-anova_table = sm.stats.anova_lm(lm, typ=2)
+# Means by subject
+means = data.reset_index().groupby(['participant', 'perception', 'angle']).mean()
 
-print('\n\nResponses\n------')
-print(anova_table)
+# arcsine transformation
+means['response'] = np.arcsin(np.sqrt(means['response']))
 
-lm = sm.formula.ols('confidence ~ perception * C(angle)', data).fit()
-anova_table = sm.stats.anova_lm(lm, typ=2)
-print('\n\nConfidence\n------')
-print(anova_table)
+r.globalenv['means'] = com.convert_to_r_dataframe(means.reset_index(), strings_as_factors=True)
+r.r('''
+means$angle <- factor(means$angle)
+means$participant <- factor(means$participant)
+''')
 
-lm = sm.formula.ols('rt ~ perception * C(angle)', data).fit()
-anova_table = sm.stats.anova_lm(lm, typ=2)
-print('\n\nResponse time\n------')
-print(anova_table)
+for variable in ['response', 'rt', 'confidence']:
+    print('\n\n{}\n-------'.format(variable))
+    print(r.r('summary(aov({} ~ angle*perception + Error(participant), data=means))'.format(variable)))
