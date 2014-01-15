@@ -34,6 +34,8 @@ for perception in ('haptic', 'visual'):
     percents = summary['can step', 'mean'].swaplevel('angle', 'perception').xs(perception)[:-1].copy()
     percents.sort()
     boundary[perception] = np.interp(50, percents, percents.index)
+print('Angles with 50% responding "yes":')
+print(boundary)
 
 
 def make_plot(df):
