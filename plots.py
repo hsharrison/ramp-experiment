@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.3
 import matplotlib.pyplot as plt
 import numpy as np
 from ramp import RampExperiment
