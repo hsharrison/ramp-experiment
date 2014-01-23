@@ -17,7 +17,7 @@ data['angle'] = [angle_map[angle] for angle in data['angle']]
 
 #workaround for timedelta since pandas can't take the mean of a timedelta:
 # http://stackoverflow.com/questions/20625982/split-apply-combine-on-pandas-timedelta-column
-data['rt'] = [10**-9 * float(rt) for rt in data['rt']]
+data['rt'] = [rt.total_seconds() if rt else None for rt in data['rt']]
 
 # remove subject 4
 data = data.ix[1:3].append(data.ix[5:])
