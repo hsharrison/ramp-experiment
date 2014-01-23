@@ -2,6 +2,6 @@ numpy==1.8.0
 rpy2==2.3.8
 pandas==0.13.0
 git+https://github.com/matplotlib/matplotlib@1.3.1#egg=matplotlib
-hg+https://bitbucket.org/hharrison/experimentator@subclass-interface#egg=experimentator
+hg+https://bitbucket.org/hharrison/experimentator@v0.1.0#egg=experimentator
 hg+https://code.google.com/p/pyglet@4f1ab#egg=pyglet
 docopt==0.6.1
