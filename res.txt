@@ -1,0 +1,170 @@
+\subsubsection{Method}
+
+\paragraph{Participants}
+Ten University of Connecticut undergraduate students between the 
+ages of 18 and 26 participated in the study, 
+in partial fulfillment of a course 
+requirement. Six participants were male and four female. The experiment 
+was conducted with the approval of the University of Connecticut 
+Institutional Review Board.
+
+\paragraph{Materials}
+A wooden dowel 121.92~cm in length and 1.59~cm in diamter was 
+used for dynamic-touch trials. A felt+++???+++velt blindfold was used on 
+dynamic-touch trials to eliminate visual information, and on visual 
+trials while the experimenters adjusted the slope of the surface. 
+Participants wore circumaural headphones playing white noise to eliminate 
+auditory information while the experimenters adjusted the slope. Beeping
+ noises were also played through the headphones to signal the start of 
+each trial.  Participants indicated their responses by pressing a button
+ on a Logitech wireless presentation remote. A PC running custom software
+ written in Python controlled the audio and recorded participants' 
+responses and response times.
+
+\paragraph{Apparatus}
+The apparatus consisted of a solid wooden 75.88~cm x 210.19~cm platform 
+leaned on a heavy metal block. The slope of the platform was adjusted by
+ sliding the block along the floor. For seven angles of 
+inclination --- $12^\circ$, $17^\circ$, $22^\circ$, $27^\circ$, $33^\circ$,
+$39^\circ$, and $45^\circ$, the corresponding position of the block was 
+determined and marked on the floor so it could be quickly recreated. The 
+apparatus was strong and stable enough to support a person's weight. A 
+rubber mat was attached to the platform in order to increase friction.
+
+\paragraph{Design and procedure}
+The participant's task in this experiment was to determine whether a surface would support stable upright posture, defined as maintaining balance while standing with feet flat and parallel.
+
+
+The participant perceived the slope either visually or haptically, 
+by exploring the surface with a dowel. 
+{\color{red} In order to explore the slope, the participants were allowed
+to touch the slope with the tip of the dowel.}
+In both types of trials, 
+participants stood with their heels 1~m away from the slope. 
+They wore a blindfold and listened to white noise while the experimenters 
+adjusted the slope of the surface. For haptic trials, the participants were 
+instructed to hold the dowel touching the floor and the side of their foot 
+during this time. An experimenter pressed a button on the PC to indicate 
+that the slope was ready, pausing the white noise. After a random delay 
+of 0.5~s-1.5~s, the participant heard a beep indicating the start of the 
+trial. For visual trials, the participant lifted the blindfold at the 
+sound of the beep; for haptic trials, the participant lifted the dowel 
+and began exploring the slope.
+
+The participants indicated their responses by pressing one of 
+two buttons on the presentation remote, having previously been 
+instructed that a right button press indicated that the ramp could support upright posture,
+while a left button press indicated that it could not. 
+%Participants 
+%then indicated the degree of confidence in their judgments by speaking aloud 
+%a number from one to seven, where one indicated they were basically 
+%guessing and seven indicated they were very confident. An experimenter 
+%recorded this number, at which point the white noise was 
+%resumed and the 
+Subsequently, participants returned their blindfold to their eyes (visual
+condition) or 
+the dowel to the initial position (haptic condition). 
+The experimenters then adjusted the 
+%The PC then displayed 
+the angle of 
+inclination of the slope for the next trial.
+
+Response time was recorded beginning with the beep and ending when a 
+button on the presentation remote was pressed. Participants were not 
+asked to respond quickly; the instructions did not address the speed of 
+the response in any way.
+
+Seven angles of inclination were crossed with two modes of perception for a 
+total of 14 experimental conditions. Each condition was repeated three 
+times for a total of 42 trials per participant. Haptic and 
+visual trials were conducted in separate blocks. Half the 
+participants began with the visual trials and half began 
+with the haptic trials. Angle of inclination was randomized within each block.
+
+
+At the end of each session, the participant's maximum 
+angle of inclination allowing upriht posture was estimated.
+Beginning with the smallest angle, the
+participant attempted to stand on the platform. If the participant was able to
+achieve stable upright posture, the angle of inclination was increased. If the
+participant was not able to achieve stable upright posture within two
+attempts, the previous angle was recorded as the participant's maximum
+possible 
+angle
+of inclination. 
+%Participants accomodate the slope by bending at both the
+%hip and the ankle, unlike in Fitzpatrick and Carello (1994), 
+%in which participants were only permitted to bend at the ankle.
+Note that in order to stand on the platform, participants were allowed to
+bend their bodies both at the
+hip and the ankle. This was different from the study by 
+Fitzpatrick and Carello~\cite{xxx}, 
+in which participants were only allowed to bend at the ankle.
+Our procedure more closely reflects real-world standing on inclinded surfaces, and is also safer.
+
+\subsubsection{Results}
+Data were checked for outliers. In this step,
+data from one partipant was excluded from any analyses 
+because that participant dominated the results by taking more 
+than three times the standard deviation longer than the mean 
+response time for almost every trial. For each of the remaining 9 
+participants, 
+the proportion of "yes" responses 
+%as well as the mean confidence judgment 
+and the mean response time 
+was calculated for each of the 14 experimental 
+conditions.  
+
+Figure~\ref{fig:pct} 
+shows the percentage of "yes" responses as function of the inclination angle
+for the visual and haptic conditions. The percentage of "yes" responses
+decayed more or less monotonically with increasing inclination angle.
+The pattern of responses were similar between the haptic and 
+visual modes of perception. 
+
+
+The perceived maximum possible 
+angles 
+of inclination, defined as the angle of inclination resulting 
+in 50\% yes responses, was estimated using linear interpolation. This 
+was estimated to be $26.04^\circ$ for visual perception and $27.75^\circ$ for 
+haptic perception. The actual maximum stable angle 
+The maximum possible angle
+of inclination, 
+averaged across participants, was $30.33^\circ$.
+
+
+For hypothesis testing purposes, 
+the resulting proportions of "yes" responses were 
+arcsine-transformed according to $p'=\arcsin \sqrt{p}$, where $p$ is 
+the proportion of "yes" responses. This transformation normalizes 
+proportion data. A $2 \times 7$ (perception mode $\times$ angle of inclination) 
+within-subjects ANOVA
+revealed no 
+significant main effect of perception mode on proportion of "yes" 
+responses, $F(1, 8) = 1.47$, $p > .05$. The main effect of angle 
+of inclination on proportion of "yes" responses was significant, $F(6, 48) =
+29.42$, $p < .0001$. The effect on proportion of "yes" responses of 
+the interaction between angle of inclination and mode of perception 
+was not significant, $F(6, 48) = 0.83$, $p > .05$. 
+
+Figure~\ref{fig:rt} shows
+response times by inclination angle and condition.
+First of all, Figure~\ref{fig:rt} 
+indicates consistently longer response times for
+haptic perception than for visual perception. Second, the graphs showed a
+more or less pronounced 
+peaked. The maximum average response
+times occurred at $27^\circ$ 
+for both haptic and visual perception, closely
+matching the perceived maximum possible angles 
+of inclination of $27.75^\circ$
+and $26.04^\circ$, respectively. 
+
+A $2 \times 7$ (perception mode $\times$ angle of inclination)
+within-subjects ANOVA
+was performed on response times, finding a
+significant main effect of mode of perception, $F(1,8) = 25.32$, $p<.01$
+and no significant main effect of angle of inclination, $F(6, 48) = 2.20$, $p
+= .059$. The interaction between angle of inclination and perception mode was
+not significant, $F(6, 48) = 0.55$, $p > .05$. 
