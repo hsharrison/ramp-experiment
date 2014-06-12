@@ -40,7 +40,7 @@ means$participant <- factor(means$participant)
 
 for variable in ['response', 'rt', 'confidence']:
     print('\n\n{}\n-------'.format(variable))
-    print(r.r('summary(aov({} ~ angle*perception + Error(participant/angle*perception), data=means))'.format(variable)))
+    print(r.r('summary(aov({} ~ angle*perception + Error(participant/(angle*perception)), data=means))'.format(variable)))
 
 # Get the actual mean boundary
 data['max_angle'] = data['max_angle'].astype(int)
