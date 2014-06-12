@@ -69,7 +69,7 @@ class RampExperiment(exp.Experiment):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
-        self.init_sounds()
+        #self.init_sounds()
         new_entries = dict(window=None, press=None, label=None)
         self.__dict__.update(new_entries)
 
